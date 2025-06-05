@@ -56,9 +56,11 @@ def clean_bbg_df (df) :
 
     # loop through each row, change col Tenor, keep Description, Convert col Yield to %age, drop rest
     for index, row in df.iterrows() :
-        Tenor.append(float(row['Tenor'][:-1]) * daycount_ACTby360(str(row['Tenor'][-1:])))
-        Descript.append(str(row['Description']))
-        Swap_parrate.append(float(row['Yield'])/100)
+
+        if str(row['Tenor'][:-1]) != "18" :
+            Tenor.append(float(row['Tenor'][:-1]) * daycount_ACTby360(str(row['Tenor'][-1:])))
+            Descript.append(str(row['Description']))
+            Swap_parrate.append(float(row['Yield'])/100)
 
     # create clean_df
     clean_dict = {'Tenor' : Tenor, 'Description' : Descript , 'Par rate' : Swap_parrate }
