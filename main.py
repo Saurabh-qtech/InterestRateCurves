@@ -2,7 +2,7 @@
 # import libraries
 from fetchdata import fetchxldata, clean_bbg_df
 import pandas as pd
-from InterestRateCurves.yieldcurve_noInterpolation import yieldcurve
+from yieldcurve_LinearInterpolation import yieldcurve_LI
 from printfunctions import printdictionary, printList
 import matplotlib.pyplot as plt 
 import numpy as np
@@ -16,23 +16,24 @@ if __name__ == "__main__" :
     # clean bbg data
     bbg_source_clean = clean_bbg_df(bbg_source)
 
-    print(bbg_source_clean)
+    #print(bbg_source_clean)
 
     # SOFR yield curve
-    sofryc = yieldcurve('SOFR YC', bbg_source_clean)
+    sofryc = yieldcurve_LI('SOFR YC', bbg_source_clean)
     sofryc.fit()
-
-    print(len(sofryc.discountfactors))
-    print(len(sofryc.zr))
-    print(len(sofryc.fr))
+    
+    #print(len(sofryc.zr))
+    #print(len(sofryc.fr))
     #printdictionary(sofryc.discountfactors)
 
     # plot
+    
     plt.plot(list(range(1, 51)), sofryc.zr)
     plt.xticks(np.arange(1,52,3))
-    plt.yticks(np.arange(0.01,0.11,0.005))
+    plt.yticks(np.arange(0.025,0.045,0.002))
     plt.grid()
     plt.show()
+    
 
    
     
